@@ -1,5 +1,5 @@
 
-# Socket.IO Music
+# Sound Distributor
 
 A socket-based sound distributor
 
@@ -15,7 +15,7 @@ a port by supplying the `PORT` env variable.
 
 ## Features
 
-Log multiple computers into the site and run the command startPhase()` in the
+Log multiple computers into the site and run the command `startPhase()` in the
 browser console. Build and randomly generate arrangements of sound using the
 `nextPhase()`, `bassPhase()`, and `pongPhase()` methods. End the arrangement
 with the `endPhase()` command.

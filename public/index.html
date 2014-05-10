@@ -8,6 +8,13 @@
 <body>
 <center><h1>Sound Distributor</h1>
   <a href="https://github.com/cepko33/SoundDistributor"><h2>Stefan Cepko</h2></a></center>
+<p>
+<center>
+  <input type="button" value="Bass" onclick="playBass(getRandomInt(0,1))"></input>
+  <input type="button" value="Pong" onclick="playPong(getRandomInt(0,1));"></input>
+  <input type="button" value="Strings" onclick="playStrings(getRandomInt(0,4));"></input>
+</center>
+  </p>
 
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>

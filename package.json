@@ -19,6 +19,7 @@
     "test": "make test"
   },
   "dependencies": {
+    "express": "3.4.8",
     "socket.io": "1.0.0-pre2",
     "engine.io": "1.1.0",
     "socket.io-parser": "2.1.3",

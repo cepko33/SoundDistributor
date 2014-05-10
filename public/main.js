@@ -237,7 +237,8 @@ function playBass(s) {
     x.g.gain.value = 0;
     console.log(x);
   });
-  bass[s].g.gain.value = 1; 
+  if (getRandomInt(0,2) == 0)
+    bass[s].g.gain.value = 1; 
 }
 
 function playPong(s) {
@@ -245,7 +246,8 @@ function playPong(s) {
     x.g.gain.value = 0;
     console.log(x);
   });
-  pong[s].g.gain.value = 1; 
+  if (getRandomInt(0,3) == 0)
+    pong[s].g.gain.value = 1; 
 }
 
 function playDrum(s) {
@@ -253,7 +255,8 @@ function playDrum(s) {
     x.g.gain.value = 0;
     console.log(x);
   });
-  drum[s].g.gain.value = 1; 
+  if (getRandomInt(0,4) == 0)
+    drum[s].g.gain.value = 1; 
 }
 
 socket.on('start', function(data) {
@@ -268,7 +271,7 @@ socket.on('next', function(data) {
   playStrings(getRandomInt(0,5));
   playBass(getRandomInt(0,1));
   playPong(getRandomInt(0,1));
-  playDrum(1);
+  playDrum(0);
 });
 
 socket.on('bass', function(data) {

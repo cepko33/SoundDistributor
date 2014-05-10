@@ -203,6 +203,7 @@ function playBass(s) {
 
 socket.on('go', function(data) {
   startStrings();
+  startBass();
   playStrings(0);
 });
 

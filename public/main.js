@@ -229,9 +229,7 @@ function playStrings(s) {
     x.g.gain.value = 0;
     console.log(x);
   });
-  try {
   strings[s].g.gain.value = 1; 
-  }
 }
 
 function playBass(s) {

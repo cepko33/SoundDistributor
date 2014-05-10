@@ -132,6 +132,7 @@ function init() {
       './sounds/strings1.wav',
       './sounds/strings2.wav',
       './sounds/strings3.wav',
+      './sounds/strings4.wav',
     ],
     finishedLoading,
     strings
@@ -141,13 +142,35 @@ function init() {
     context,
     [
       './sounds/bass0.wav',
+      './sounds/bass1.wav',
     ],
     finishedLoading,
     bass
     );
 
+  pongLoader = new BufferLoader(
+    context,
+    [
+      './sounds/pong0.wav',
+      './sounds/pong1.wav',
+    ],
+    finishedLoading,
+    pong
+    );
+
+  drumLoader = new BufferLoader(
+    context,
+    [
+      './sounds/drummy0.wav',
+    ],
+    finishedLoading,
+    drum
+    );
+
+  pongLoader.load();
   stringsLoader.load();
   bassLoader.load();
+  drumLoader.load();
 }
 
 function getRandomInt(min, max) {
@@ -156,6 +179,8 @@ function getRandomInt(min, max) {
 
 var strings = [];
 var bass = [];
+var pong = [];
+var drum = [];
 
 function finishedLoading(bufferList, outArr) {
 
@@ -185,6 +210,20 @@ function startBass() {
   });
 }
 
+function startPong() {
+  pong.forEach(function(x) {
+    x.g.gain.value = 0;
+    x.start(0);
+  });
+}
+
+function startDrum() {
+  drum.forEach(function(x) {
+    x.g.gain.value = 0;
+    x.start(0);
+  });
+}
+
 function playStrings(s) {
   strings.forEach(function(x, idx) { 
     x.g.gain.value = 0;
@@ -201,19 +240,50 @@ function playBass(s) {
   bass[s].g.gain.value = 1; 
 }
 
-socket.on('go', function(data) {
+function playPong(s) {
+  pong.forEach(function(x, idx) { 
+    x.g.gain.value = 0;
+    console.log(x);
+  });
+  pong[s].g.gain.value = 1; 
+}
+
+function playDrum(s) {
+  drum.forEach(function(x, idx) { 
+    x.g.gain.value = 0;
+    console.log(x);
+  });
+  drum[s].g.gain.value = 1; 
+}
+
+socket.on('start', function(data) {
   startStrings();
   startBass();
+  startPong();
+  startDrum();
   playStrings(0);
 });
 
 socket.on('next', function(data) {
-  playStrings(getRandomInt(0,3));
+  playStrings(getRandomInt(0,6));
+  playBass(getRandomInt(0,4));
+  playPong(getRandomInt(0,4));
+  playDrum(getRandomInt(0,4));
 });
 
 socket.on('bass', function(data) {
   if (data == 0)
-    playBass(getRandomInt(0,3));
+    playBass(getRandomInt(0,2));
+});
+
+socket.on('pong', function(data) {
+  if (data == 0)
+    playPong(getRandomInt(0,2));
+});
+
+socket.on('drum', function(data) {
+  if (data == 0)
+    playDrum(getRandomInt(0,2));
 });
 
 function startPhase() {
@@ -229,4 +299,9 @@ function nextPhase() {
 function bassPhase() {
   data = getRandomInt(0,2);
   socket.emit('bass', data);
+}
+
+function pongPhase() {
+  data = getRandomInt(0,3);
+  socket.emit('pong', data);
 }

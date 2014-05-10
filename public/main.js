@@ -1,6 +1,6 @@
-function Total() {
-  var FADE_TIME = 150; // ms
-  var TYPING_TIMER_LENGTH = 400; // ms
+var socket = io();
+
+$(function() {
   var COLORS = [
     '#e21400', '#91580f', '#f8a700', '#f78b00',
     '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
@@ -33,7 +33,6 @@ function createSource(buffer) {
     gainNode.connect(context.destination);
 }
 
-
 this.play = function(freq, start, end, vol) {
     var startTime = context.currentTime + 0.100;
     o = context.createOscillator();
@@ -65,16 +64,17 @@ this.rhythm = function() {
         this.play(150 + x, .66 + x, .33, 0.8);
     }
 }
-};
+});
 
-var t = new Total();
 
-function BufferLoader(context, urlList, callback) {
+
+function BufferLoader(context, urlList, callback, outArr) {
   this.context = context;
   this.urlList = urlList;
   this.onload = callback;
   this.bufferList = new Array();
   this.loadCount = 0;
+  this.out = outArr;
 }
 
 BufferLoader.prototype.loadBuffer = function(url, index) {
@@ -96,7 +96,7 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
         }
         loader.bufferList[index] = buffer;
         if (++loader.loadCount == loader.urlList.length)
-          loader.onload(loader.bufferList);
+          loader.onload(loader.bufferList, loader.out);
       },
       function(error) {
         console.error('decodeAudioData error', error);
@@ -125,35 +125,82 @@ function init() {
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   context = new AudioContext();
 
-  bufferLoader = new BufferLoader(
+  stringsLoader = new BufferLoader(
     context,
     [
       './sounds/strings0.wav',
       './sounds/strings1.wav',
       './sounds/strings2.wav',
+      './sounds/strings3.wav',
     ],
-    finishedLoading
+    finishedLoading,
+    strings
+    );
+  
+  bassLoader = new BufferLoader(
+    context,
+    [
+      './sounds/bass0.wav',
+    ],
+    finishedLoading,
+    bass
     );
 
-  bufferLoader.load();
+  stringsLoader.load();
+  bassLoader.load();
 }
 
-function finishedLoading(bufferList) {
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var strings = [];
+var bass = [];
+
+function finishedLoading(bufferList, outArr) {
+
+  bufferList.forEach(function(x, idx) {
+    outArr[idx] = context.createBufferSource();
+    outArr[idx].g = context.createGain();
+    outArr[idx].g.connect(context.destination);
+    outArr[idx].buffer = x;
+    outArr[idx].loop = true;
+    outArr[idx].connect(outArr[idx].g);
+  });
   // Create two sources and play them both together.
-  var source1 = context.createBufferSource();
-  var source2 = context.createBufferSource();
-  var source3 = context.createBufferSource();
-  source1.buffer = bufferList[0];
-  source2.buffer = bufferList[1];
-  source3.buffer = bufferList[2];
-  
-  source1.loop = true;   
-  source2.loop = true;   
-  source3.loop = true;   
 
-  source1.connect(context.destination);
-  source2.connect(context.destination);
-  source3.connect(context.destination);
+}
 
-  source1.start(0);
+function startStrings() {
+  strings.forEach(function(x) {
+    x.g.gain.value = 0;
+    x.start(0);
+  });
+}
+
+function playStrings(s) {
+  strings.forEach(function(x, idx) { 
+    x.g.gain.value = 0;
+    console.log(x);
+  });
+  strings[s].g.gain.value = 1; 
+}
+
+socket.on('go', function(data) {
+  startStrings();
+  playStrings(0);
+});
+
+socket.on('next', function(data) {
+  playStrings(getRandomInt(0,3));
+});
+
+function startPhase() {
+  data = "beginning the event";
+  socket.emit('start', data);
+}
+
+function nextPhase() {
+  data = "next event";
+  socket.emit('next', data);
 }

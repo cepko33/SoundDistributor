@@ -266,24 +266,24 @@ socket.on('start', function(data) {
 
 socket.on('next', function(data) {
   playStrings(getRandomInt(0,5));
-  playBass(getRandomInt(0,2));
-  playPong(getRandomInt(0,2));
-  playDrum(getRandomInt(0,1));
+  playBass(getRandomInt(0,1));
+  playPong(getRandomInt(0,1));
+  playDrum(1);
 });
 
 socket.on('bass', function(data) {
   if (data == 0)
-    playBass(getRandomInt(0,2));
+    playBass(getRandomInt(0,1));
 });
 
 socket.on('pong', function(data) {
   if (data == 0)
-    playPong(getRandomInt(0,2));
+    playPong(getRandomInt(0,1));
 });
 
 socket.on('drum', function(data) {
   if (data == 0)
-    playDrum(getRandomInt(0,2));
+    playDrum(0);
 });
 
 function startPhase() {

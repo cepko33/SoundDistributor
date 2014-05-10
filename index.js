@@ -30,6 +30,11 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('next', data);
   });
 
+  socket.on('end', function(data) {
+    console.log(data);
+    socket.broadcast.emit('end', data);
+  });
+
   socket.on('bass', function(data) {
     console.log(data);
     socket.broadcast.emit('bass', data);

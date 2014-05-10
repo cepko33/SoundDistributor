@@ -229,6 +229,8 @@ function playStrings(s) {
     x.g.gain.value = 0;
     console.log(x);
   });
+  if (s > strings.length)
+      return;
   strings[s].g.gain.value = 1; 
 }
 
@@ -237,6 +239,8 @@ function playBass(s) {
     x.g.gain.value = 0;
     console.log(x);
   });
+  if (s > bass.length)
+      return;
   if (getRandomInt(0,2) == 0)
     bass[s].g.gain.value = 1; 
 }
@@ -246,6 +250,8 @@ function playPong(s) {
     x.g.gain.value = 0;
     console.log(x);
   });
+  if (s > pong.length)
+      return;
   if (getRandomInt(0,3) == 0)
     pong[s].g.gain.value = 1; 
 }
@@ -255,6 +261,8 @@ function playDrum(s) {
     x.g.gain.value = 0;
     console.log(x);
   });
+  if (s > drum.length)
+    return;
   if (getRandomInt(0,4) == 0)
     drum[s].g.gain.value = 1; 
 }
@@ -268,25 +276,35 @@ socket.on('start', function(data) {
 });
 
 socket.on('next', function(data) {
-  playStrings(getRandomInt(0,5));
+  playStrings(getRandomInt(0,4));
   playBass(getRandomInt(0,1));
   playPong(getRandomInt(0,1));
   playDrum(0);
 });
 
 socket.on('bass', function(data) {
-  if (data == 0)
+  if (data == getRandomInt(0,1))
     playBass(getRandomInt(0,1));
 });
 
 socket.on('pong', function(data) {
-  if (data == 0)
+  if (data == getRandomInt(0,1))
     playPong(getRandomInt(0,1));
 });
 
 socket.on('drum', function(data) {
-  if (data == 0)
+  if (data == getRandomInt(0,1))
     playDrum(0);
+});
+
+socket.on('end', function(data) {
+  var stop = function(x) {
+    x.stop(0);
+  }
+  strings.forEach(stop);
+  bass.forEach(stop);
+  pong.forEach(stop);
+  drum.forEach(stop);
 });
 
 function startPhase() {
@@ -297,6 +315,11 @@ function startPhase() {
 function nextPhase() {
   data = "next event";
   socket.emit('next', data);
+}
+
+function endPhase() {
+  data = "end event";
+  socket.emit('end', data);
 }
 
 function bassPhase() {

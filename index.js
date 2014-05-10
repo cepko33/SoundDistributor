@@ -29,4 +29,9 @@ io.on('connection', function (socket) {
     console.log(data);
     socket.broadcast.emit('next', data);
   });
+
+  socket.on('bass', function(data) {
+    console.log(data);
+    socket.broadcast.emit('bass', data);
+  });
 });

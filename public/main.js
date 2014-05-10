@@ -178,12 +178,27 @@ function startStrings() {
   });
 }
 
+function startBass() {
+  bass.forEach(function(x) {
+    x.g.gain.value = 0;
+    x.start(0);
+  });
+}
+
 function playStrings(s) {
   strings.forEach(function(x, idx) { 
     x.g.gain.value = 0;
     console.log(x);
   });
   strings[s].g.gain.value = 1; 
+}
+
+function playBass(s) {
+  bass.forEach(function(x, idx) { 
+    x.g.gain.value = 0;
+    console.log(x);
+  });
+  bass[s].g.gain.value = 1; 
 }
 
 socket.on('go', function(data) {
@@ -195,6 +210,11 @@ socket.on('next', function(data) {
   playStrings(getRandomInt(0,3));
 });
 
+socket.on('bass', function(data) {
+  if (data == 0)
+    playBass(getRandomInt(0,3));
+});
+
 function startPhase() {
   data = "beginning the event";
   socket.emit('start', data);
@@ -203,4 +223,9 @@ function startPhase() {
 function nextPhase() {
   data = "next event";
   socket.emit('next', data);
+}
+
+function bassPhase() {
+  data = getRandomInt(0,2);
+  socket.emit('bass', data);
 }

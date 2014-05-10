@@ -1,0 +1,64 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', 'audiojs' ]
+2 info using npm@1.4.3
+3 info using node@v0.10.26
+4 verbose readDependencies using package.json deps
+5 verbose cache add [ 'audiojs', null ]
+6 verbose cache add name=undefined spec="audiojs" args=["audiojs",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'audiojs',
+7 verbose parsed url   path: 'audiojs',
+7 verbose parsed url   href: 'audiojs' }
+8 silly lockFile e4f4e8b6-audiojs audiojs
+9 verbose lock audiojs /home/cepkos/.npm/e4f4e8b6-audiojs.lock
+10 silly lockFile e4f4e8b6-audiojs audiojs
+11 silly lockFile e4f4e8b6-audiojs audiojs
+12 verbose addNamed [ 'audiojs', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile e9e52e9f-audiojs audiojs@
+15 verbose lock audiojs@ /home/cepkos/.npm/e9e52e9f-audiojs.lock
+16 silly addNameRange { name: 'audiojs', range: '*', hasData: false }
+17 verbose url raw audiojs
+18 verbose url resolving [ 'https://registry.npmjs.org/', './audiojs' ]
+19 verbose url resolved https://registry.npmjs.org/audiojs
+20 info trying registry request attempt 1 at 18:48:43
+21 http GET https://registry.npmjs.org/audiojs
+22 http 404 https://registry.npmjs.org/audiojs
+23 silly registry.get cb [ 404,
+23 silly registry.get   { date: 'Fri, 09 May 2014 22:48:43 GMT',
+23 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+23 silly registry.get     'content-type': 'application/json',
+23 silly registry.get     via: '1.1 varnish',
+23 silly registry.get     'cache-control': 'max-age=0',
+23 silly registry.get     'content-length': '52',
+23 silly registry.get     'accept-ranges': 'bytes',
+23 silly registry.get     age: '0',
+23 silly registry.get     'x-served-by': 'cache-v41-ASH, cache-at52-ATL',
+23 silly registry.get     'x-cache': 'MISS, MISS',
+23 silly registry.get     'x-cache-hits': '0, 0',
+23 silly registry.get     'x-timer': 'S1399675723.762610674,VS0,VS8,VE18,VE24',
+23 silly registry.get     'keep-alive': 'timeout=10, max=50',
+23 silly registry.get     connection: 'Keep-Alive' } ]
+24 silly lockFile e9e52e9f-audiojs audiojs@
+25 silly lockFile e9e52e9f-audiojs audiojs@
+26 error 404 'audiojs' is not in the npm registry.
+26 error 404 You should bug the author to publish it
+26 error 404 It was specified as a dependency of 'socket.io-chat'
+26 error 404
+26 error 404 Note that you can also install from a
+26 error 404 tarball, folder, or http url, or git url.
+27 error System Linux 3.13.10-1-MANJARO
+28 error command "/usr/bin/node" "/usr/bin/npm" "install" "audiojs"
+29 error cwd /home/cepkos/Programs/socket.io/examples/chat
+30 error node -v v0.10.26
+31 error npm -v 1.4.3
+32 error code E404
+33 verbose exit [ 1, true ]

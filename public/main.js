@@ -154,4 +154,6 @@ function finishedLoading(bufferList) {
   source1.connect(context.destination);
   source2.connect(context.destination);
   source3.connect(context.destination);
+
+  source1.start(0);
 }

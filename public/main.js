@@ -307,6 +307,10 @@ socket.on('end', function(data) {
   drum.forEach(stop);
 });
 
+socket.on('reload', function(data) {
+ document.location.reload(true);
+});
+
 function startPhase() {
   data = "beginning the event";
   socket.emit('start', data);
@@ -320,6 +324,11 @@ function nextPhase() {
 function endPhase() {
   data = "end event";
   socket.emit('end', data);
+}
+
+function reload() {
+  data = "reload page";
+  socket.emit('reload', data);
 }
 
 function bassPhase() {

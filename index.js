@@ -35,6 +35,11 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('end', data);
   });
 
+  socket.on('reload', function(data) {
+    console.log(data);
+    socket.broadcast.emit('reload', data);
+  });
+
   socket.on('bass', function(data) {
     console.log(data);
     socket.broadcast.emit('bass', data);

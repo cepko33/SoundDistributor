@@ -229,7 +229,9 @@ function playStrings(s) {
     x.g.gain.value = 0;
     console.log(x);
   });
+  try {
   strings[s].g.gain.value = 1; 
+  }
 }
 
 function playBass(s) {
@@ -265,10 +267,10 @@ socket.on('start', function(data) {
 });
 
 socket.on('next', function(data) {
-  playStrings(getRandomInt(0,6));
-  playBass(getRandomInt(0,4));
-  playPong(getRandomInt(0,4));
-  playDrum(getRandomInt(0,4));
+  playStrings(getRandomInt(0,5));
+  playBass(getRandomInt(0,2));
+  playPong(getRandomInt(0,2));
+  playDrum(getRandomInt(0,1));
 });
 
 socket.on('bass', function(data) {
